@@ -14,10 +14,16 @@ export const AudioTrack: React.FC<AudioTrackProp> = (props) => {
 
     let [track, setTrack] = useState<Track>();
 
-    const play = (e: any) => {
-        let id = e.target.value;
+    const play = (e: React.MouseEvent<HTMLButtonElement>) => {
+        let button: HTMLButtonElement = e.currentTarget;
+        let id: string = button.value;
+
         let url = `${localserver}${id}`;
-        let title = e.target.dataset.title;
+        if (id.startsWith("http")) {
+            url = id;
+        }
+
+        let title = button.dataset.title!;
 
         setTrack({ url, title });
     }
@@ -45,7 +51,7 @@ export const AudioTrack: React.FC<AudioTrackProp> = (props) => {
                 <tbody>
                     {
                         props.list?.map((list, i) => {
-                            return <tr className={i % 2 == 0 ? 'pure-table-odd' : ''} key={list[0]}>
+                            return <tr className={i % 2 === 0 ? 'pure-table-odd' : ''} key={list[0]}>
                                 <td>
                                     {list[1]}
                                 </td>
