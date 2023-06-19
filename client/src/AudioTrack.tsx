@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 
 type Track = {
     url: string;
@@ -10,11 +10,15 @@ type AudioTrackProp = {
 }
 
 export const AudioTrack: React.FC<AudioTrackProp> = (props) => {
-    const localserver = "http://127.0.0.1:8080/api/id/";
+    const localserver = "/api/id/";
 
     let [track, setTrack] = useState<Track>();
 
+    const audioRef = useRef<HTMLAudioElement>(null);
+
     const play = (e: React.MouseEvent<HTMLButtonElement>) => {
+        audioRef.current?.pause();
+
         let button: HTMLButtonElement = e.currentTarget;
         let id: string = button.value;
 
@@ -26,6 +30,10 @@ export const AudioTrack: React.FC<AudioTrackProp> = (props) => {
         let title = button.dataset.title!;
 
         setTrack({ url, title });
+
+        audioRef.current?.play().catch(e => {
+            console.error(e);
+        });
     }
 
     const playEnd = () => {
@@ -69,7 +77,7 @@ export const AudioTrack: React.FC<AudioTrackProp> = (props) => {
                 </tfoot>
             </table>
             <div>
-                <audio controls src={track?.url} autoPlay onEnded={playEnd}></audio>
+                <audio controls src={track?.url} autoPlay onEnded={playEnd} ref={audioRef}></audio>
             </div>
         </div >
     );
