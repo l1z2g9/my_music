@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import './App.css';
 import './pure-min.css'
 import { AudioTrack } from './AudioTrack';
 import { liangjieeList, panChaoQiangList, rthkList, tanhuiqingList, yanjianrongList, ycanList, yePeiList, zhaobinghengList, zhongfeiList, zhouYongJieList } from './data.ts';
