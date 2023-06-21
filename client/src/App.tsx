@@ -36,9 +36,9 @@ const App = () => {
 
   const onChange = (e: any) => {
     e.preventDefault();
-    let cat = e.target.dataset.cat;
-    let subCat = e.target.dataset.subcat as string;
-    let playlist = e.target.dataset.playlist as string;
+    const cat = e.target.dataset.cat;
+    const subCat = e.target.dataset.subcat as string;
+    const playlist = e.target.dataset.playlist as string;
 
     fetch(`"/api/category/${playlist}`).then(response =>
       response.json()

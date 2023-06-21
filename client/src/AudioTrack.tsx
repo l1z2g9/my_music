@@ -9,12 +9,12 @@ type AudioTrackProp = {
 export const AudioTrack: React.FC<AudioTrackProp> = (props) => {
     const localserver = "/api/id/";
 
-    let [track, setTrack] = useState<Track>();
+    const [track, setTrack] = useState<Track>();
 
     const [isStop, setStop] = useState(true);
 
-    const audioContext = useRef<AudioContext>();;
-    const sourceNode = useRef<AudioBufferSourceNode>();;
+    const audioContext = useRef<AudioContext>();
+    const sourceNode = useRef<AudioBufferSourceNode>();
 
     useEffect(() => {
         audioContext.current = new AudioContext();
@@ -31,15 +31,15 @@ export const AudioTrack: React.FC<AudioTrackProp> = (props) => {
     const play = (e: React.MouseEvent<HTMLButtonElement>) => {
         sourceNode.current?.stop(0);
 
-        let button: HTMLButtonElement = e.currentTarget;
-        let id: string = button.value;
+        const button: HTMLButtonElement = e.currentTarget;
+        const id: string = button.value;
 
         let url = `${localserver}${id}`;
         if (id.startsWith("http")) {
             url = id;
         }
 
-        let title = button.dataset.title!;
+        const title = button.dataset.title!;
 
         setTrack({ name: title, id });
 
