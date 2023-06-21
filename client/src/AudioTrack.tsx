@@ -1,12 +1,9 @@
-import { useState, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import { Track } from "./App";
 
-type Track = {
-    url: string;
-    title: string;
-}
 
 type AudioTrackProp = {
-    list?: string[][];
+    list?: Track[];
 }
 
 export const AudioTrack: React.FC<AudioTrackProp> = (props) => {
@@ -14,10 +11,25 @@ export const AudioTrack: React.FC<AudioTrackProp> = (props) => {
 
     let [track, setTrack] = useState<Track>();
 
-    const audioRef = useRef<HTMLAudioElement>(null);
+    const [isStop, setStop] = useState(true);
+
+    const audioContext = useRef<AudioContext>();;
+    const sourceNode = useRef<AudioBufferSourceNode>();;
+
+    useEffect(() => {
+        audioContext.current = new AudioContext();
+    }, []);
+
+
+    const stop = () => {
+        if (track) {
+            setStop(true);
+            sourceNode.current?.stop(0);
+        }
+    }
 
     const play = (e: React.MouseEvent<HTMLButtonElement>) => {
-        audioRef.current?.pause();
+        sourceNode.current?.stop(0);
 
         let button: HTMLButtonElement = e.currentTarget;
         let id: string = button.value;
@@ -29,23 +41,37 @@ export const AudioTrack: React.FC<AudioTrackProp> = (props) => {
 
         let title = button.dataset.title!;
 
-        setTrack({ url, title });
+        setTrack({ name: title, id });
 
-        audioRef.current?.play().catch(e => {
-            console.error(e);
-        });
+        fetch(url)
+            .then((response) => response.arrayBuffer())
+            .then((downloadedBuffer) =>
+                audioContext.current?.decodeAudioData(downloadedBuffer)
+            ).then((decodedBuffer) => {
+                sourceNode.current = new AudioBufferSourceNode(audioContext.current!, {
+                    buffer: decodedBuffer,
+                    loop: true,
+                });
+                // Connect the nodes together
+                sourceNode.current.connect(audioContext.current!.destination);
+                sourceNode.current.start(0); // Play the sound now
+
+                setStop(false);
+            }).catch(e => {
+                console.error(`Error: ${e}`);
+            });
     }
 
-    const playEnd = () => {
+    /* const playEnd = () => {
         if (props.list) {
             let track = Math.floor((Math.random() * props.list.length) + 1);
-            let id = props.list[track][0];
+            let id = props.list[track].id;
             let url = `${localserver}${id}`;
-            let title = props.list[track][1];
+            let title = props.list[track].name;
 
-            setTrack({ url, title });
+            setTrack({ name: title, id });
         }
-    }
+    } */
 
     return (
         <div>
@@ -58,12 +84,12 @@ export const AudioTrack: React.FC<AudioTrackProp> = (props) => {
                 </thead>
                 <tbody>
                     {
-                        props.list?.map((list, i) => {
-                            return <tr className={i % 2 === 0 ? 'pure-table-odd' : ''} key={list[0]}>
+                        props.list?.map((t, i) => {
+                            return <tr className={i % 2 === 0 ? 'pure-table-odd' : ''} key={t.id}>
                                 <td>
-                                    {list[1]}
+                                    {t.name}
                                 </td>
-                                <td><button type="button" className="pure-button pure-button-primary" data-title={list[1]} onClick={play} value={list[0]}>Play</button></td>
+                                <td><button type="button" className="pure-button pure-button-primary" data-title={t.name} onClick={play} value={t.id}>Play</button></td>
                             </tr>
                         })
                     }
@@ -71,13 +97,16 @@ export const AudioTrack: React.FC<AudioTrackProp> = (props) => {
                 <tfoot>
                     <tr>
                         <td colSpan={5} className="bg-info">
-                            <b>{track?.title}</b>
+                            <b>{track?.name}</b>
                         </td>
                     </tr>
                 </tfoot>
             </table>
             <div>
-                <audio controls src={track?.url} autoPlay onEnded={playEnd} ref={audioRef}></audio>
+                {/* <audio controls src={track?.url} autoPlay onEnded={playEnd} ref={audioRef} ></audio> */}
+
+                {/* <input type="button" value="Start" onClick={start} /> &nbsp; &nbsp; */}
+                <input type="button" value="Stop" onClick={stop} disabled={isStop} />
             </div>
         </div >
     );

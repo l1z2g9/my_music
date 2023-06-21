@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
-import './pure-min.css'
 import { AudioTrack } from './AudioTrack';
-import { liangjieeList, panChaoQiangList, rthkList, tanhuiqingList, yanjianrongList, ycanList, yePeiList, zhaobinghengList, zhongfeiList, zhouYongJieList } from './data.ts';
+import './pure-min.css';
+// import { liangjieeList, panChaoQiangList, rthkList, tanhuiqingList, yanjianrongList, ycanList, yePeiList, zhaobinghengList, zhongfeiList, zhouYongJieList } from './data.ts';
 
 /* type Pair<T, K> = [T, K];
 type Pairs<T, K> = Pair<T, K>[] */
@@ -9,30 +9,42 @@ type Pairs<T, K> = Pair<T, K>[] */
 type TrackList = {
   cat: string;
   subCat: string;
-  playlist: string[][];
+  playlist: Track[];
 }
 
-type AudioList = Record<string, string[][]>;
+export type Track = {
+  name: string,
+  id: string
+}
 
-function App() {
-  const audioList: AudioList = {
+const App = () => {
+  // const catList: Record<string, string> = { 'ycanList': '唐詩七絕選賞 - 陳耀南教授主講' };
+  /* const audioList: AudioList = {
     '唐詩七絕選賞 - 陳耀南教授主講': ycanList, '葉培': yePeiList, '潘昭強': panChaoQiangList, '周永傑': zhouYongJieList,
     '招秉恒': zhaobinghengList, '梁潔娥': liangjieeList, '譚惠清': tanhuiqingList, '鍾飛': zhongfeiList, '嚴劍蓉': yanjianrongList, 'RTHK': rthkList
-  };
+  }; */
 
   const [trackList, setTrackList] = useState<TrackList>();
 
   useEffect(() => {
-    setTrackList({ cat: '粵講越有趣', subCat: '唐詩七絕選賞 - 陳耀南教授主講', playlist: ycanList });
+    fetch("/api/category/ycanList").then(response =>
+      response.json()
+    ).then(list => {
+      setTrackList({ cat: '粵講越有趣', subCat: '唐詩七絕選賞 - 陳耀南教授主講', playlist: list });
+    })
   }, []);
 
   const onChange = (e: any) => {
-    //e.preventDefault();
+    e.preventDefault();
     let cat = e.target.dataset.cat;
     let subCat = e.target.dataset.subcat as string;
-    let playlist = audioList[subCat];
+    let playlist = e.target.dataset.playlist as string;
 
-    setTrackList({ cat, subCat, playlist })
+    fetch(`"/api/category/${playlist}`).then(response =>
+      response.json()
+    ).then(list => {
+      setTrackList({ cat, subCat, playlist: list });
+    })
   }
 
   return (
@@ -43,7 +55,7 @@ function App() {
           <li className="pure-menu-item pure-menu-has-children pure-menu-allow-hover">
             <a href="#" id="menuLink1" className="pure-menu-link">大城小事</a>
             <ul className="pure-menu-children">
-              <li className="pure-menu-item"><a href="#" onClick={onChange} data-cat="大城小事" data-subcat="葉培" className="pure-menu-link">葉培</a></li>
+              <li className="pure-menu-item"><a href="#" onClick={onChange} data-cat="大城小事" data-subcat="葉培" data-playlist="yePeiList" className="pure-menu-link">葉培</a></li>
               <li className="pure-menu-item"><a href="#" onClick={onChange} data-cat="大城小事" data-subcat="潘昭強" className="pure-menu-link">潘昭強</a></li>
               <li className="pure-menu-item"><a href="#" onClick={onChange} data-cat="大城小事" data-subcat="周永傑" className="pure-menu-link">周永傑</a></li>
               <li className="pure-menu-item"><a href="#" onClick={onChange} data-cat="大城小事" data-subcat="招秉恒" className="pure-menu-link">招秉恒</a></li>

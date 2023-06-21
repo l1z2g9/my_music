@@ -1,0 +1,12 @@
+micronaut:
+  application:
+    name: server-java-mn
+  router:
+    static-resources:
+      default:
+        # paths: file:///Users/user/Desktop/Forrest/workspace/my_music/server-java-mn/src/main/resources/dist # gradle nativeCompile
+        # paths: classpath:/dist # gradle build
+        paths: file:///app/dist # gradle dockerBuildNative
+        mapping: /app/**
+  server:
+    host: 0.0.0.0

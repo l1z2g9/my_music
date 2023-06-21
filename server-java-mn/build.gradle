@@ -1,0 +1,45 @@
+plugins {
+    id('com.github.johnrengelman.shadow') version '7.1.2'
+    id('io.micronaut.application') version '3.7.10'
+}
+
+version = '0.1'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation('jakarta.annotation:jakarta.annotation-api')
+    implementation('org.json:json:20230227')
+    implementation('com.google.guava:guava:31.1-jre')
+
+    runtimeOnly('ch.qos.logback:logback-classic')
+}
+
+application {
+    mainClass.set('mymusic.Application')
+}
+
+java {
+    sourceCompatibility = JavaVersion.toVersion('17')
+    targetCompatibility = JavaVersion.toVersion('17')
+}
+
+graalvmNative.toolchainDetection = false
+micronaut {
+    runtime('jetty')
+    testRuntime('junit5')
+    processing {
+        incremental(true)
+        annotations('mymusic.*')
+    }
+}
+
+tasks.named('dockerfileNative') {
+    editDockerfile {
+        after('COPY --from=graalvm /home/app/application /app/application') {
+            insert('COPY --from=graalvm /home/app/resources/dist /app/dist')
+        }
+    }
+}
