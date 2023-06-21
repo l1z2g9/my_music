@@ -35,11 +35,13 @@ export const AudioTrack: React.FC<AudioTrackProp> = (props) => {
         const id: string = button.value;
 
         let url = `${localserver}${id}`;
-        if (id.startsWith("http")) {
-            url = id;
-        }
 
         const title = button.dataset.title!;
+
+        if (id.startsWith("RTHK")) {
+            window.open(title);
+            return;
+        }
 
         setTrack({ name: title, id });
 

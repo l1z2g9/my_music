@@ -6,9 +6,11 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.lang.System.Logger;
 import java.lang.System.Logger.Level;
+import java.lang.reflect.Array;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,8 +31,8 @@ import io.micronaut.http.annotation.Get;
 import io.micronaut.http.annotation.PathVariable;
 
 @Controller("/api")
-public class GoogleDrivePathController {
-    Logger logger = System.getLogger(GoogleDrivePathController.class.getName());
+public class PathController {
+    private Logger logger = System.getLogger(PathController.class.getName());
 
     @Inject
     private ResourceLoader loader;
@@ -58,24 +60,38 @@ public class GoogleDrivePathController {
     }
 
     @PostConstruct
-    private void init() throws IOException {
-        String fileName = "ycanList";
+    private void init() {
+        Arrays.asList("ycanList", "rthkList").forEach(f -> {
+            try {
+                logger.log(Level.INFO, "f = " + f);
+                readTrackList(f);
+            } catch (IOException e) {
+                logger.log(Level.ERROR, e);
+            }
+        });
+    }
 
+    private void readTrackList(String fileName) throws IOException {
+        logger.log(Level.INFO, "file name = " + fileName);
         try (InputStream in = loader.getResourceAsStream(fileName + ".txt").orElseThrow()) {
             List<String> lines = new BufferedReader(new InputStreamReader(in,
                     StandardCharsets.UTF_8)).lines().collect(Collectors.toList());
 
             lines.forEach(line -> {
                 String[] p = line.split("\\|");
-                config.put(p[1], p[2]);
+                if (p.length > 1) {
+                    if (p.length > 2) {
+                        config.put(p[1], p[2]);
+                    }
 
-                AudioCateogry ac = new AudioCateogry(p[0], p[1]);
-                if (audioCategory.containsKey(fileName)) {
-                    audioCategory.get(fileName).add(ac);
-                } else {
-                    List<AudioCateogry> list = new ArrayList<>();
-                    list.add(ac);
-                    audioCategory.put(fileName, list);
+                    AudioCateogry ac = new AudioCateogry(p[0], p[1]);
+                    if (audioCategory.containsKey(fileName)) {
+                        audioCategory.get(fileName).add(ac);
+                    } else {
+                        List<AudioCateogry> list = new ArrayList<>();
+                        list.add(ac);
+                        audioCategory.put(fileName, list);
+                    }
                 }
             });
         }
