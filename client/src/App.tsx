@@ -66,6 +66,7 @@ const App = () => {
             </ul>
           </li>
           <li className="pure-menu-item"><a href="#" onClick={onChange} data-cat="LiveRadio" data-subcat="RTHK" data-playlist="rthkList" className="pure-menu-link">RTHK Live Radio</a></li>
+          <li className="pure-menu-item"><a href="#" onClick={onChange} data-cat="LiveRadio" data-subcat="Radio FoShan" data-playlist="foshanList" className="pure-menu-link">FoShan Live Radio</a></li>
         </ul>
       </div>
       <h1>{trackList?.cat}</h1>

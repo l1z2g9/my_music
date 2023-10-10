@@ -6,7 +6,8 @@ micronaut:
       default:
         # paths: file:///Users/user/Desktop/Forrest/workspace/my_music/server-java-mn/src/main/resources/dist # gradle nativeCompile
         # paths: classpath:/dist # gradle build
-        paths: file:///app/dist # gradle dockerBuildNative
+        # paths: file:///app/dist # gradle dockerBuildNative
+        paths: file:///Users/user/Desktop/Forrest/workspace/my_music/client/dist # gradle build -- local development
         mapping: /app/**
   server:
     host: 0.0.0.0

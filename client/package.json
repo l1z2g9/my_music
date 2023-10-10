@@ -6,10 +6,12 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
+    "build-watch": "tsc && vite build --watch",
     "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
   },
   "dependencies": {
+    "@davland7/rplayer": "^2.0.6",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },

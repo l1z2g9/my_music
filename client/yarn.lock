@@ -210,6 +210,13 @@
     "@babel/helper-validator-identifier" "^7.22.5"
     to-fast-properties "^2.0.0"
 
+"@davland7/rplayer@^2.0.6":
+  version "2.0.6"
+  resolved "https://registry.yarnpkg.com/@davland7/rplayer/-/rplayer-2.0.6.tgz#c19ab0158c50b13d23bd23e1e0dfc9ba56bc3211"
+  integrity sha512-m4A5E9r4G39+WMmNYUDxtp4RClnhuPmNzIlfuvbgB2Q8/cUmZrarJNvt8J7hlLbzKOCJCuIBgcTDZGv0yHOhFA==
+  dependencies:
+    hls.js "^1.4.5"
+
 "@esbuild/android-arm64@0.17.19":
   version "0.17.19"
   resolved "https://registry.yarnpkg.com/@esbuild/android-arm64/-/android-arm64-0.17.19.tgz#bafb75234a5d3d1b690e7c2956a599345e84a2fd"
@@ -1053,6 +1060,11 @@ has-flag@^4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/has-flag/-/has-flag-4.0.0.tgz#944771fd9c81c81265c4d6941860da06bb59479b"
   integrity sha512-EykJT/Q1KjTWctppgIAgfSO0tKVuZUjhgMr17kqTumMl6Afv3EISleU7qZUzoXDFTAHTDC4NOoG/ZxU3EvlMPQ==
+
+hls.js@^1.4.5:
+  version "1.4.12"
+  resolved "https://registry.yarnpkg.com/hls.js/-/hls.js-1.4.12.tgz#2022daa29d10c662387d80a5297f8330f8ef5ee2"
+  integrity sha512-1RBpx2VihibzE3WE9kGoVCtrhhDWTzydzElk/kyRbEOLnb1WIE+3ZabM/L8BqKFTCL3pUy4QzhXgD1Q6Igr1JA==
 
 ignore@^5.2.0:
   version "5.2.4"

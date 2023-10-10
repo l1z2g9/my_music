@@ -27,6 +27,11 @@ set frontend folder in static-resources
     paths: file:///app/dist
 
 gradle dockerBuildNative
-docker tag my_music repo.lab.v.com/forrest/xxx/login-service
-docker push repo.lab.v.com/forrest/xxx/login-service
+docker tag my_music cmVwby5sYWIudmFybWVlZ28uY29tL2ZvcnJlc3Qud2VuL2NlZGItdHN3L2xvZ2luLXNlcnZpY2U=
+docker push cmVwby5sYWIudmFybWVlZ28uY29tL2ZvcnJlc3Qud2VuL2NlZGItdHN3L2xvZ2luLXNlcnZpY2U=
 ```
+
+## Local development
+```
+session 1: yarn build-watch
+session 2: gradle build && java -jar build\libs\my_music-0.1-all.jar

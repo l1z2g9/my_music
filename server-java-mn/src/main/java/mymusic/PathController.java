@@ -61,7 +61,7 @@ public class PathController {
 
     @PostConstruct
     private void init() {
-        Arrays.asList("ycanList", "rthkList").forEach(f -> {
+        Arrays.asList("ycanList", "rthkList", "foshanList").forEach(f -> {
             try {
                 logger.log(Level.INFO, "f = " + f);
                 readTrackList(f);
@@ -85,6 +85,7 @@ public class PathController {
                     }
 
                     AudioCateogry ac = new AudioCateogry(p[0], p[1]);
+                    
                     if (audioCategory.containsKey(fileName)) {
                         audioCategory.get(fileName).add(ac);
                     } else {
