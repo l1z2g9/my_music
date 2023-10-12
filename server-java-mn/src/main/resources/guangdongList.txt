@@ -1,2 +1,7 @@
 FM 993|https://rlizhi.gdtv.cn/audio/fm993.m3u8?auth_key=1697101442-0-0-aaf06724f12ee095b2da59e4518a3143
 FM 974|https://rlizhi.gdtv.cn/audio/fm974.m3u8?auth_key=1697101516-0-0-192be3442fc491fb5c0a778b6103825c
+FM 914|https://rlizhi.gdtv.cn/audio/fm914.m3u8?auth_key=1697101794-0-0-c79db9b150c158e5a114b2c33b281f22
+FM 1036|https://rlizhi.gdtv.cn/audio/fm1036.m3u8?auth_key=1697107825-0-0-da63490db80fb5bd8eeec094fed74bdb
+FM 1057|https://rlizhi.gdtv.cn/audio/fm1057.m3u8?auth_key=1697108046-0-0-a956df80798fb58a6b2a58931821e068
+FM 936|https://rlizhi.gdtv.cn/audio/fm936.m3u8?auth_key=1697108095-0-0-24e86269a7d88aff988567571eba5439
+FM 1052|https://rlizhi.gdtv.cn/audio/fm1052.m3u8?auth_key=1697108116-0-0-221d5eaea682fefd25879dc59bc48711
