@@ -65,8 +65,14 @@ const App = () => {
               <li className="pure-menu-item"><a href="#" onClick={onChange} data-cat="大城小事" data-subcat="嚴劍蓉" className="pure-menu-link">嚴劍蓉</a></li>
             </ul>
           </li>
-          <li className="pure-menu-item"><a href="#" onClick={onChange} data-cat="LiveRadio" data-subcat="RTHK" data-playlist="rthkList" className="pure-menu-link">RTHK Live Radio</a></li>
-          <li className="pure-menu-item"><a href="#" onClick={onChange} data-cat="LiveRadio" data-subcat="Radio FoShan" data-playlist="foshanList" className="pure-menu-link">FoShan Live Radio</a></li>
+          <li className="pure-menu-item pure-menu-has-children pure-menu-allow-hover">
+            <a href="#" id="menuLink2" className="pure-menu-link">Live Radio</a>
+            <ul className="pure-menu-children">
+              <li className="pure-menu-item"><a href="#" onClick={onChange} data-cat="LiveRadio" data-subcat="RTHK" data-playlist="rthkList" className="pure-menu-link">RTHK Live Radio</a></li>
+              <li className="pure-menu-item"><a href="#" onClick={onChange} data-cat="LiveRadio" data-subcat="Radio Fo Shan" data-playlist="foshanList" className="pure-menu-link">Fo Shan Live Radio</a></li>
+              <li className="pure-menu-item"><a href="#" onClick={onChange} data-cat="LiveRadio" data-subcat="Radio Guang Dong" data-playlist="guangdongList" className="pure-menu-link">Guang Dong Live Radio</a></li>
+            </ul>
+          </li>
         </ul>
       </div>
       <h1>{trackList?.cat}</h1>

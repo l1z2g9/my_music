@@ -43,3 +43,22 @@ tasks.named('dockerfileNative') {
         }
     }
 }
+
+
+task cleanUpDist(type: Delete) {
+   delete files("src/main/resources/dist")
+}
+
+tasks.register('copyClientDist', Copy, {
+    dependsOn tasks.cleanUpDist
+
+    from(file('../client/dist/'))
+    into(file('src/main/resources/dist'))
+})
+
+processResources {
+  doFirst {
+        def command = "xcopy /S /I /Q /Y /F ..\\client\\dist src\\main\\resources\\dist"   // failed to add command "del /q/s src\\main\\resources\\dist && "
+        Runtime.runtime.exec(command).waitFor()
+    }
+}

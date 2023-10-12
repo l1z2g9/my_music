@@ -1,0 +1,2 @@
+FM 993|https://rlizhi.gdtv.cn/audio/fm993.m3u8?auth_key=1697101442-0-0-aaf06724f12ee095b2da59e4518a3143
+FM 974|https://rlizhi.gdtv.cn/audio/fm974.m3u8?auth_key=1697101516-0-0-192be3442fc491fb5c0a778b6103825c

@@ -27,8 +27,9 @@ set frontend folder in static-resources
     paths: file:///app/dist
 
 gradle dockerBuildNative
-docker tag my_music cmVwby5sYWIudmFybWVlZ28uY29tL2ZvcnJlc3Qud2VuL2NlZGItdHN3L2xvZ2luLXNlcnZpY2U=
-docker push cmVwby5sYWIudmFybWVlZ28uY29tL2ZvcnJlc3Qud2VuL2NlZGItdHN3L2xvZ2luLXNlcnZpY2U=
+docker run -d -p 0.0.0.0:8080:8080 my_music
+docker tag my_music repo.lab.varmeego.com/forrest.wen/cedb-tsw/login-service
+docker push repo.lab.varmeego.com/forrest.wen/cedb-tsw/login-service
 ```
 
 ## Local development

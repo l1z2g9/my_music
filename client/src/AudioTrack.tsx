@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Track } from "./App";
 import rPlayer from "./rplayer";
+import useAudioPlayer from "./use-audio-player";
 
 // Reference
 // https://rplayer.js.org/
@@ -17,27 +18,10 @@ export const AudioTrack: React.FC<AudioTrackProp> = (props) => {
 
     const [track, setTrack] = useState<Track>();
     const [isStop, setStop] = useState(true);
-    const [playRandom, setPlayRandom] = useState(true);
+    const autoPlay = useRef(false);
 
     const audio = useRef<rPlayer>();
-
-    const playAnother = () => {
-        if (props.list) {
-            let track = Math.floor((Math.random() * props.list.length) + 1);
-
-            console.log("Play another track.", track);
-
-            let id = props.list[track].id;
-            let url = `${localserver}${id}`;
-            let title = props.list[track].name;
-
-            audio.current?.playSrc(url);
-
-            setTrack({ name: title, id });
-
-            setStop(false);
-        }
-    }
+    const { playUrl, stopPlaying } = useAudioPlayer();
 
     useEffect(() => {
         audio.current = new rPlayer();
@@ -47,21 +31,13 @@ export const AudioTrack: React.FC<AudioTrackProp> = (props) => {
         }; */
     }, []);
 
-    useEffect(() => {
-        console.log("check playing", playRandom, audio.current?.playing)
-        if (playRandom && !audio.current?.playing) {
-            // playAnother();
-        }
-    }, [playRandom, audio.current?.playing])
-
 
     const stop = () => {
-        if (track) {
-            setStop(true);
-            audio.current?.stop();
+        setStop(true);
 
-            setPlayRandom(false);
-        }
+        autoPlay.current = false;
+        stopPlaying();
+        audio.current?.stop();
     }
 
     const play = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -80,35 +56,40 @@ export const AudioTrack: React.FC<AudioTrackProp> = (props) => {
         } else {
             let url = `${localserver}${id}`;
 
-            audio.current?.playSrc(url);
-
-            console.log("ycanList - Playing", url);
-            setPlayRandom(true);
+            // does not work in android chrome 
+            // audio.current?.playSrc(url); 
+            playUrl(url, playAnother);
         }
 
         setTrack({ name: title, id });
 
         setStop(false);
-        /*fetch(url)
-            .then((response) => response.arrayBuffer())
-            .then((downloadedBuffer) =>
-                audioContext.current?.decodeAudioData(downloadedBuffer)
-            ).then((decodedBuffer) => {
-                sourceNode.current = new AudioBufferSourceNode(audioContext.current!, {
-                    buffer: decodedBuffer,
-                    loop: true,
-                });
-                // Connect the nodes together
-                sourceNode.current.connect(audioContext.current!.destination);
-                sourceNode.current.start(0); // Play the sound now
-
-                setStop(false);
-            }).catch(e => {
-                console.error(`Error: ${e}`);
-            });*/
-
-
     }
+
+
+    const playAnother = () => {
+        if (props.list && autoPlay.current) {
+            let track = Math.floor((Math.random() * props.list.length) + 1);
+
+            console.log("Play another track.", track);
+
+            let id = props.list[track].id;
+            let url = `${localserver}${id}`;
+            let title = props.list[track].name;
+
+            playUrl(url);
+
+            setTrack({ name: title, id });
+            setStop(false);
+        }
+    }
+
+    const styles = {
+        buttonWarning: {
+            background: "#df7514"
+            /* this is an orange */
+        }
+    };
 
     return (
         <div>
@@ -142,8 +123,7 @@ export const AudioTrack: React.FC<AudioTrackProp> = (props) => {
             <div>
                 {/* <audio controls src={track?.url} autoPlay onEnded={playEnd} ref={audioRef} ></audio> */}
 
-                {/* <input type="button" value="Start" onClick={start} /> &nbsp; &nbsp; */}
-                <input type="button" value="Stop" onClick={stop} disabled={isStop} />
+                <button type="button" className="pure-button" style={styles.buttonWarning} onClick={stop} disabled={isStop} >Stop</button>
             </div>
         </div >
     );
