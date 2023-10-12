@@ -43,9 +43,6 @@ const useAudioPlayer = () => {
                         }
                     }
                 }
-
-
-                console.log("ycanList - Playing", url);
             }).catch(e => {
                 console.error(`Error: ${e}`);
             })

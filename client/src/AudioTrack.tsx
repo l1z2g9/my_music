@@ -43,11 +43,15 @@ export const AudioTrack: React.FC<AudioTrackProp> = (props) => {
     const play = (e: React.MouseEvent<HTMLButtonElement>) => {
         const button: HTMLButtonElement = e.currentTarget;
         const id: string = button.value;
-
         const title = button.dataset.title!;
 
         console.log("id", id);
         console.log("title", title);
+
+        if (track?.id == id) {
+            console.log(id, "is playing");
+            return;
+        }
 
         if (title.startsWith("RTHK") || title.startsWith("FM")) {
             audio.current?.playSrc(id);
@@ -59,6 +63,7 @@ export const AudioTrack: React.FC<AudioTrackProp> = (props) => {
             // does not work in android chrome 
             // audio.current?.playSrc(url); 
             playUrl(url, playAnother);
+            console.log("ycanList - Playing", url);
         }
 
         setTrack({ name: title, id });
