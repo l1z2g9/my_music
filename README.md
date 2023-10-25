@@ -20,10 +20,10 @@ Or
 
 ## Docker build native executable
 ```
-yarn build && move /y dist\* ..\server-java-mn\src\main\resources\dist\
 Copy dist folder from client to src\main\resources
+  yarn build && copy /y dist\* ..\server-java-mn\src\main\resources\dist\
 
-set frontend folder in static-resources
+set frontend folder in static-resources in application.yml
     paths: file:///app/dist
 
 gradle dockerBuildNative

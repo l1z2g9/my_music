@@ -53,6 +53,8 @@ export const AudioTrack: React.FC<AudioTrackProp> = (props) => {
             return;
         }
 
+        stop();
+
         if (title.startsWith("RTHK") || title.startsWith("FM")) {
             audio.current?.playSrc(id);
 
